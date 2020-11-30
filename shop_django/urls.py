@@ -20,18 +20,8 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-<<<<<<< HEAD:shop_django/urls.py
-    path('', mainapp.main, name="main" ),
-    path('products/', mainapp.products, name="products"),
-    path('products/all/', mainapp.products_all, name="products_all"),
-    path('products/home/', mainapp.products_home, name="products_home"),
-    path('products/office/', mainapp.products_office, name="products_office"),
-    path('products/modern/', mainapp.products_modern, name="products_modern"),
-    path('products/classic/', mainapp.products_classic, name="products_classic"),
-=======
     path('', mainapp.main, name="main"),
     path('products/', include("mainapp.urls", namespace="products")),
->>>>>>> Home_3:Home_1/shop_django/shop_django/urls.py
     path('contacts/', mainapp.contact, name="contacts"),
     path('admin/', admin.site.urls),
 ]
