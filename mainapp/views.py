@@ -15,7 +15,7 @@ def main(request):
 
 def products(request,pk=None):
     links_menu = ProductCategory.objects.all()
-    file_content = os.path.join(settings.BASE_DIR, "products.json")
+    print(pk)
     content = {
         'title': 'Продукты',
         'links_menu': links_menu,
@@ -24,7 +24,7 @@ def products(request,pk=None):
 
 def contact(request):
     locations = []
-    file_content = os.path.join(settings.BASE_DIR, "contacts.json")
+    file_content = os.path.join(settings.BASE_DIR, "mainapp/json/contacts.json")
     with open(file_content) as fc:
         file_contact = fc.read()
         locations = json.loads(file_contact)
@@ -33,19 +33,3 @@ def contact(request):
         'locations': locations
     }
     return render(request,'mainapp/contact.html',content)
-
-def products_all(request):
-    links_menu = ProductCategory.objects.all()
-    content= {
-        'title': 'Продукты',
-        'links_menu': links_menu
-    }
-    return render(request,'mainapp/products.html',content)
-
-def products_home(request):
-    links_menu = ProductCategory.objects.all()
-    content= {
-        'title': 'Продукты',
-        'links_menu': links_menu
-    }
-    return render(request,'mainapp/products.html',content)
