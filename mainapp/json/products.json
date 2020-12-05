@@ -2,7 +2,7 @@
   {
     "category": "Дом",
     "name": "Комфорт 1",
-    "image": "products_images/product-1.jpg",
+    "image": "products_images/product_1.jpg",
     "short_desc": "Комфорт",
     "description": "Комфорт",
     "price": 1500,
@@ -11,7 +11,7 @@
   {
     "category": "Дом",
     "name": "Комфорт 2",
-    "image": "products_images/product-1.jpg",
+    "image": "products_images/product_4.jpg",
     "short_desc": "Комфорт",
     "description": "Комфорт",
     "price": 3500,
@@ -20,7 +20,7 @@
   {
     "category": "Дом",
     "name": "Люкс",
-    "image": "products_images/product-1.jpg",
+    "image": "products_images/product_2.jpg",
     "short_desc": "Комфорт",
     "description": "Комфорт",
     "price": 7500,
@@ -29,7 +29,7 @@
   {
     "category": "Офис",
     "name": "Комфорт 3",
-    "image": "products_images/product-1.jpg",
+    "image": "products_images/product_3.jpg",
     "short_desc": "Комфорт",
     "description": "Комфорт",
     "price": 2500,
@@ -38,7 +38,7 @@
   {
     "category": "Модерн",
     "name": "Люкс +",
-    "image": "products_images/product-1.jpg",
+    "image": "products_images/product_5.jpg",
     "short_desc": "Комфорт",
     "description": "Комфорт",
     "price": 15000,
