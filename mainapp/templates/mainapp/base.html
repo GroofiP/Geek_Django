@@ -9,8 +9,8 @@
         {% endblock %}
     </title>
     {% block css %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-theme.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-theme.min.css' %}">
     <link rel="stylesheet" href="{% static 'fonts/font-awesome/css/font-awesome.min.css' %}">
     <link rel="stylesheet" href="{% static 'fonts/font-awesome/css/font-awesome.css' %}">
     {% endblock %}
@@ -27,7 +27,7 @@
         {% include 'mainapp/includes/inc_main_menu.html' %}
         <a href="#" class="search"></a>
         <a href="{% url 'basket:view'%}" class="basket">
-            <span>{% if basket %}{{ basket|length }}{%endif%}</span>
+            <span>{% if basket %}{{ basket.0.total_cost|floatformat:0 }} руб ({{basket.0.total_quantity}} шт.){%endif%}</span>
         </a>
     </div>
     {% endblock %}
