@@ -39,6 +39,21 @@ def delete(request, pk):
     return HttpResponseRedirect(request.META.get("HTTP_REFERER"))
 
 @login_required
+def delete_ajax(request, pk):
+    if request.is_ajax():
+        basket_for_delete = Basket.objects.get(pk=pk)
+        basket_for_delete.delete()
+
+        basket_items = Basket.objects.filter(user=request.user).order_by("product__category")
+
+        content = {
+            "basket_items": basket_items
+        }
+        print("hello")
+        result = render_to_string("basketapp/includes/inc_basket.html",content)
+        return JsonResponse({"result": result})
+
+@login_required
 def edit(request, pk, quantity):
     if request.is_ajax():
         quantity = int(quantity)
