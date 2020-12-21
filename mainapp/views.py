@@ -1,5 +1,6 @@
 import random
 
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import render, get_object_or_404
 from django.conf import settings
 
@@ -9,33 +10,30 @@ import os
 import json
 
 
-def get_basket(user):
-    if user.is_authenticated:
-        return Basket.objects.filter(user=user)
-    return []
 
 def get_hot_product():
     products_list = Product.objects.all()
-    return random.sample(list(products_list),1)[0]
+    return random.sample(list(products_list), 1)[0]
+
 
 def get_same_products(hot_products):
-    return Product.objects.filter(category__pk = hot_products.category.pk).exclude(pk=hot_products.pk)[:3]
+    return Product.objects.filter(category__pk=hot_products.category.pk).exclude(pk=hot_products.pk)[:3]
+
 
 def main(request):
     products_main = Product.objects.all()[0:4]
     content = {
         'title': 'Главная',
         "products": products_main,
-        'basket': get_basket(request.user),
     }
     return render(request, 'mainapp/index.html', content)
 
 
-def products(request, pk=None):
+def products(request, pk=None, page=1):
     links_menu = ProductCategory.objects.all()
 
     if pk is not None:
-        if pk == 1:
+        if pk == 0:
             products_list = Product.objects.all()
             category = {"name": "Все", "pk": 0}
         else:
@@ -43,12 +41,18 @@ def products(request, pk=None):
             category = get_object_or_404(ProductCategory, pk=pk)
             products_list = Product.objects.filter(category__pk=pk)
 
+        paginator = Paginator(products_list,2)
+        try:
+            product_paginator = paginator.page(page)
+        except PageNotAnInteger:
+            product_paginator = paginator.page(1)
+        except EmptyPage:
+            product_paginator = paginator.page(paginator.num_pages)
         content = {
             'title': 'Продукты',
             'links_menu': links_menu,
-            'products': products_list,
+            'products': product_paginator,
             'category': category,
-            'basket': get_basket(request.user)
         }
         return render(request, 'mainapp/products_list.html', content)
 
@@ -59,21 +63,21 @@ def products(request, pk=None):
         'title': 'Продукты',
         'links_menu': links_menu,
         'products': same_products,
-        'basket': get_basket(request.user),
         'hot_product': hot_product
     }
 
     return render(request, 'mainapp/products.html', content)
 
-def product(request,pk):
+
+def product(request, pk):
     title = "Продукт"
     content = {
         "title": title,
         "links_menu": ProductCategory.objects.all(),
-        'basket': get_basket(request.user),
-        "product": get_object_or_404(Product,pk=pk)
+        "product": get_object_or_404(Product, pk=pk)
     }
-    return render(request,"mainapp/product.html", content)
+    return render(request, "mainapp/product.html", content)
+
 
 def contact(request):
     file_content = os.path.join(settings.BASE_DIR, "mainapp/json/contacts.json")
@@ -83,6 +87,5 @@ def contact(request):
         content = {
             'title': 'Продукты',
             'locations': locations,
-            'basket': get_basket(request.user)
         }
         return render(request, 'mainapp/contact.html', content)
