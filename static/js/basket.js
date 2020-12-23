@@ -35,27 +35,12 @@ window.onload = function () {
 
                 success: function (data) {
                     $('.basket_list').html(data.result);
-
+                    console.log('ajax done');
                 },
             });
 
         }
         event.preventDefault();
-    });
-
-    $('.basket_list').on('click', '.btn_del', function () {
-        let pk = $(this).attr("data-pk");
-        if (pk) {
-            $.ajax({
-                url: "/basket/delete/ajax/" + pk + "/",
-
-                success: function (data) {
-                    $('.basket_list').html(data.result);
-                    console.log("hello")
-                }
-            });
-        }
-        return;
     });
 
 };

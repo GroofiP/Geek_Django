@@ -1,6 +1,3 @@
-import hashlib
-import random
-
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm
 from django.forms import forms,HiddenInput
 
@@ -39,15 +36,6 @@ class ShopUserRegisterForm(UserCreationForm):
         if ".ru" in data:
             return data
         raise forms.ValidationError("Регистрируем ящики только с окончанием '.ru' ")
-
-    def save(self):
-        user = super().save()
-        user.is_active = False
-        sait = hashlib.sha1(str(random.random()).encode("utf8")).hexdigest()[:6]
-        user.activation_key = hashlib.sha1((user.email + sait).encode("utf8")).hexdigest()
-        user.save()
-
-        return user
 
 
 class ShopUserEditForm(UserChangeForm):
