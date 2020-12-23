@@ -3,3 +3,8 @@ shop_django/__pycache__/
 mainapp/__pycache__/
 authapp/__pycache__/
 basketapp/__pycache__/
+adminapp/__pycache__/
+/tmp/
+/env/
+mainapp/json/vk.json
+
