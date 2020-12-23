@@ -57,11 +57,11 @@ class UsersListView(ListView):
 #     }
 #     return render(requset, "adminapp/users.html", content)
 
-class UserUpdateView(CreateView):
+class UserUpdateView(UpdateView):
     model = ShopUser
     template_name = "adminapp/user_update.html"
     success_url = reverse_lazy("adminapp:users")
-    form_class = ShopUserRegisterForm
+    form_class = ShopUserAdminEditForm
 
     @method_decorator(user_passes_test(lambda u: u.is_superuser))
     def dispatch(self, *args, **kwargs):
@@ -338,7 +338,7 @@ class ProductDetailView(DetailView):
 
 
 
-class ProductUpdateView(CreateView):
+class ProductUpdateView(UpdateView):
     model = Product
     template_name = "adminapp/product_update.html"
     form_class = ProductEditForm
@@ -356,9 +356,9 @@ class ProductUpdateView(CreateView):
         return context_data
 
     def get_success_url(self):
-        category_pk = self.kwargs["pk"]
-        success_url = reverse("adminapp:products", args=[category_pk])
-        return success_url
+        pk = self.kwargs["pk"]
+        product_item = Product.objects.get(pk=pk)
+        return reverse("adminapp:products", args=[product_item.category.pk])
 
 # @user_passes_test(lambda u: u.is_superuser)
 # def product_update(request, pk):
