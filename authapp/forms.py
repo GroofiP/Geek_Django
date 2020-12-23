@@ -1,11 +1,10 @@
 import hashlib
 import random
 
-from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm
-from django.forms import HiddenInput
+from django.forms import forms,HiddenInput
 
-from authapp.models import ShopUser, ShopUserProfile
+from authapp.models import ShopUser
 
 
 class ShopUserLoginForm(AuthenticationForm):
@@ -76,13 +75,3 @@ class ShopUserEditForm(UserChangeForm):
         if ".ru" in data:
             return data
         raise forms.ValidationError("Регистрируем ящики только с окончанием '.ru' ")
-
-class ShopUserProfileEditForm(forms.ModelForm):
-    class Meta:
-        model = ShopUserProfile
-        fields = ("tagline","about_me","gender",)
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        for filed_name, field in self.fields.items():
-            field.widget.attrs["class"] = "form-control"
